@@ -452,10 +452,10 @@ class PodGenerator:
         # Get prefix length after subtracting the uuid length. Clean up '.' and '-' from
         # end of podID ('.' can't be followed by '-').
         label_prefix_length = MAX_LABEL_LEN - len(safe_uuid) - 1  # -1 for separator
-        trimmed_pod_id = pod_id[:label_prefix_length].rstrip('-.')
+        # trimmed_pod_id = pod_id[:label_prefix_length].rstrip('-.')
 
         # previously used a '.' as the separator, but this could create errors in some situations
-        return f"{trimmed_pod_id}-{safe_uuid}"
+        return f"{pod_id}-{safe_uuid}"
 
 
 def merge_objects(base_obj, client_obj):
