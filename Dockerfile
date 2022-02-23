@@ -184,8 +184,8 @@ ARG UPGRADE_TO_NEWER_DEPENDENCIES="false"
 # www to compile the assets but in case of breeze/CI builds we use latest sources and we override those
 # those SOURCES_FROM/TO with "airflow/www" and "/opt/airflow/airflow/www" respectively.
 # This is to rebuild the assets only when any of the www sources change
-ARG AIRFLOW_SOURCES_WWW_FROM="empty"
-ARG AIRFLOW_SOURCES_WWW_TO="/empty"
+ARG AIRFLOW_SOURCES_WWW_FROM="."
+ARG AIRFLOW_SOURCES_WWW_TO="/opt/airflow"
 
 # By default we install latest airflow from PyPI so we do not need to copy sources of Airflow
 # but in case of breeze/CI builds we use latest sources and we override those
