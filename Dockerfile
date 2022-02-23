@@ -173,7 +173,8 @@ ARG INSTALL_PROVIDERS_FROM_SOURCES="false"
 # Airflow checked out together with the Dockerfile and AIRFLOW_SOURCES_FROM and AIRFLOW_SOURCES_TO
 # set to "." and "/opt/airflow" respectively. Similarly AIRFLOW_SOURCES_WWW_FROM/TO are set to right source
 # and destination
-ARG AIRFLOW_INSTALLATION_METHOD="apache-airflow"
+#XXX: PyPI에서 가져오는 걸 막고 로컬에서 마운트하도록 수정한다.
+ARG AIRFLOW_INSTALLATION_METHOD="."
 # By default we do not upgrade to latest dependencies
 ARG UPGRADE_TO_NEWER_DEPENDENCIES="false"
 # By default we install latest airflow from PyPI so we do not need to copy sources of Airflow
@@ -186,8 +187,10 @@ ARG AIRFLOW_SOURCES_WWW_TO="/empty"
 # By default we install latest airflow from PyPI so we do not need to copy sources of Airflow
 # but in case of breeze/CI builds we use latest sources and we override those
 # those SOURCES_FROM/TO with "." and "/opt/airflow" respectively
-ARG AIRFLOW_SOURCES_FROM="empty"
-ARG AIRFLOW_SOURCES_TO="/empty"
+
+#XXX: PyPI에서 가져오는 걸 막고 로컬에서 마운트하도록 수정한다.
+ARG AIRFLOW_SOURCES_FROM="."
+ARG AIRFLOW_SOURCES_TO="/opt/airflow"
 
 ARG AIRFLOW_HOME
 ARG AIRFLOW_USER_HOME_DIR
