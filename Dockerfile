@@ -46,9 +46,10 @@ ARG AIRFLOW_UID="50000"
 ARG AIRFLOW_USER_HOME_DIR=/home/airflow
 
 # latest released version here
+ARG SOCAR_AIRFLOW_VERSION="2.2.3"
 ARG AIRFLOW_VERSION="2.2.3"
 
-ARG PYTHON_BASE_IMAGE="python:3.7-slim-buster"
+ARG PYTHON_BASE_IMAGE="python:3.8-slim-buster"
 
 ARG AIRFLOW_PIP_VERSION=21.3.1
 ARG AIRFLOW_IMAGE_REPOSITORY="https://github.com/apache/airflow"
