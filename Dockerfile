@@ -37,9 +37,8 @@
 # syntax=docker/dockerfile:1.3
 ARG AIRFLOW_EXTRAS="amazon,async,celery,cncf.kubernetes,dask,docker,elasticsearch,ftp,google,google_auth,grpc,hashicorp,http,ldap,microsoft.azure,mysql,odbc,pandas,postgres,redis,sendgrid,sftp,slack,ssh,statsd,virtualenv"
 # airflow v2로 넘어가면서 필요한 추가 pip 패키지들을 설치한다.
-
 ARG ADDITIONAL_AIRFLOW_EXTRAS=""
-ARG ADDITIONAL_PYTHON_DEPS="beautifulsoup4==4.9.3,lxml==4.6.2,future"
+
 
 ARG AIRFLOW_HOME=/opt/airflow
 ARG AIRFLOW_UID="50000"
@@ -148,6 +147,7 @@ ARG AIRFLOW_REPO=apache/airflow
 ARG AIRFLOW_BRANCH=main
 ARG AIRFLOW_EXTRAS
 ARG ADDITIONAL_AIRFLOW_EXTRAS=""
+ARG ADDITIONAL_PYTHON_DEPS="beautifulsoup4==4.9.3,lxml==4.6.2,xmltodict==0.12.0,future"
 # Allows to override constraints source
 ARG CONSTRAINTS_GITHUB_REPOSITORY="apache/airflow"
 ARG AIRFLOW_CONSTRAINTS="constraints"
@@ -178,7 +178,7 @@ ARG INSTALL_PROVIDERS_FROM_SOURCES="false"
 #XXX: PyPI에서 가져오는 걸 막고 로컬에서 마운트하도록 수정한다.
 ARG AIRFLOW_INSTALLATION_METHOD="."
 # By default we do not upgrade to latest dependencies
-ARG UPGRADE_TO_NEWER_DEPENDENCIES="false"
+ARG UPGRADE_TO_NEWER_DEPENDENCIES="true"
 # By default we install latest airflow from PyPI so we do not need to copy sources of Airflow
 # www to compile the assets but in case of breeze/CI builds we use latest sources and we override those
 # those SOURCES_FROM/TO with "airflow/www" and "/opt/airflow/airflow/www" respectively.
@@ -295,7 +295,7 @@ RUN if [[ ${AIRFLOW_INSTALLATION_METHOD} == "." ]]; then \
     fi;
 
 # Add extra python dependencies
-ARG ADDITIONAL_PYTHON_DEPS="beautifulsoup4==4.9.3 lxml==4.6.2 future"
+ARG ADDITIONAL_PYTHON_DEPS="beautifulsoup4==4.9.3 lxml==4.6.2 future xmltodict==0.12.0"
 # We can set this value to true in case we want to install .whl .tar.gz packages placed in the
 # docker-context-files folder. This can be done for both - additional packages you want to install
 # and for airflow as well (you have to set INSTALL_FROM_PYPI to false in this case)
