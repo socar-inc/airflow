@@ -100,6 +100,16 @@ div.container {
   animation: pinSpin 1.5s linear infinite;
 }
 
+.brand-logo>img {
+     height:100%
+}
+.brand-logo>img {
+     transition: transform 1s linear;
+ }
+.brand-logo:hover > img{
+     transform: translate(80px, 0)
+}
+
 .navbar-user-icon {
   display: inline-flex;
   justify-content: center;
