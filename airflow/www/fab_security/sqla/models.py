@@ -134,7 +134,8 @@ class Permission(Model):
     """Permission pair comprised of an Action + Resource combo."""
 
     __tablename__ = "ab_permission_view"
-    __table_args__ = (UniqueConstraint("permission_id", "view_menu_id"),)
+    __table_args__ = {'extend_existing': True}
+    # __table_args__ = (UniqueConstraint("permission_id", "view_menu_id"),)
     id = Column(Integer, get_sequence_or_identity("ab_permission_view_id_seq"), primary_key=True)
     action_id = Column("permission_id", Integer, ForeignKey("ab_permission.id"))
     action = relationship(
