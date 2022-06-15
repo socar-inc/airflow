@@ -1,0 +1,23 @@
+ARG AIRFLOW_BASE_IMAGE="apache/airflow:2.3.2"
+FROM $AIRFLOW_BASE_IMAGE
+ARG EXTRA_PIP_PACKAGES=""
+# comma-split repo names
+ARG EXTRA_GIT_REPOS=""
+
+USER root
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+         git \
+  && apt-get autoremove -yqq --purge \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p -m 777 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# NOTE: airflow 이미지 상에서 root 유저로 pip가 불가능하다.
+# 현재 구조상 github으로 부터 패키지를 가져와야 하므로 pip + ssh key를 통한 인증이 불가능하다.
+# 그러므로 github clone 후 editable package로 설치하는 식으로 우회함.
+# TODO: git clone을 일괄적으로 하는 shell script 추가
+RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-airflow-provider.git /opt/airflow/custom_providers/socar-data-provider
+
+USER airflow
+RUN pip install --no-cache-dir -e ./custom_providers/socar-data-provider
