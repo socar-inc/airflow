@@ -1,5 +1,5 @@
 ARG AIRFLOW_BASE_IMAGE="apache/airflow:2.3.2"
-FROM $AIRFLOW_BASE_IMAGE
+FROM --platform=linux/amd64 $AIRFLOW_BASE_IMAGE
 ARG EXTRA_PIP_PACKAGES=""
 # comma-split repo names
 ARG EXTRA_GIT_REPOS=""
@@ -21,3 +21,4 @@ RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-a
 
 USER airflow
 RUN pip install --no-cache-dir -e ./custom_providers/socar-data-provider
+RUN pip install apache-airflow-providers-common-sql==1.0.0
