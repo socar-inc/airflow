@@ -1,4 +1,4 @@
-name: SOCAR Airflow ${{ github.event.inputs.image_tag }}
+name: SOCAR Airflow Custom Image
 on:
   workflow_dispatch:
     inputs:
