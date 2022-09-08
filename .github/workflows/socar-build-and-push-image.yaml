@@ -34,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ github.event.inputs.image_repository }}:
+          images: ${{ github.event.inputs.image_repository }}
           tags: |
             type=raw,value=${{ github.event.inputs.image_tag }}
       - name: Install SSH key
