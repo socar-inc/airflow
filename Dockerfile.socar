@@ -18,7 +18,7 @@ RUN mkdir -p -m 777 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 # 그러므로 github clone 후 editable package로 설치하는 식으로 우회함.
 # TODO: git clone을 일괄적으로 하는 shell script 추가
 RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-airflow-provider.git /opt/airflow/custom_providers/socar-data-provider
-RUN pkgs=(${EXTRA_PIP_PACKAGES//,/});eval "extra_pip_packages=($pkgs)";pip install $extra_pip_packages
 
 USER airflow
+RUN pkgs=(${EXTRA_PIP_PACKAGES//,/});eval "extra_pip_packages=($pkgs)";pip install $extra_pip_packages
 RUN pip install --no-cache-dir -e ./custom_providers/socar-data-provider
