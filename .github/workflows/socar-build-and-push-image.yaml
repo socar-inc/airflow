@@ -52,9 +52,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           file: Dockerfile.socar
           build-args: |
-            EXTRA_PIP_PACKAGES=${{ github.events.inputs.extra_pip_packages }}
-            EXTRA_GIT_REPOS=${{ github.events.inputs.extra_git_repo }}
-            AIRFLOW_BASE_IMAGE=${{ github.events.inputs.base_image }}
+            EXTRA_PIP_PACKAGES=${{ github.event.inputs.extra_pip_packages }}
+            EXTRA_GIT_REPOS=${{ github.event.inputs.extra_git_repo }}
+            AIRFLOW_BASE_IMAGE=${{ github.event.inputs.base_image }}
           ssh: |
             socar-de=/home/runner/.ssh/id_rsa
       - name: Notify to Channel
