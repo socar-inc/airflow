@@ -1,0 +1,68 @@
+name: SOCAR build and push image
+on:
+  workflow_dispatch:
+    inputs:
+      base_image:
+        description: 'base airflow image'     
+        required: true
+        default: 'apache/airflow:2.3.2'
+      extra_pip_packages:
+        description: 'Extra PIP Packages'
+      extra_git_repo:
+        description: 'Extra git repo'
+      image_repository:
+        required: true
+        default: "gcr.io/socar-data/apache-airflow"
+      image_tag:
+        required: true
+        description: 'v<airflow-version>-<custom-tag>'
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ github.event.inputs.image_repository }}:
+          tags: |
+            type=raw,value=${{ github.event.inputs.image_tag }}
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SOCAR_DE_PRIVATE_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          file: Docker.socar
+          build-args: |
+            EXTRA_PIP_PACKAGES=${{ github.events.inputs.extra_pip_packages }}
+            EXTRA_GIT_REPOS=${{ github.events.inputs.extra_git_repo }}
+            AIRFLOW_BASE_IMAGE=${{ github.events.inputs.base_image }}
+          ssh: |
+            socar-de=/home/runner/.ssh/id_rsa
+      - name: Notify to Channel
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: "#dp_monitor_cicd"
+          SLACK_USERNAME: Airflow Image Builder
+          SLACK_ICON_EMOJI: ":airflow:"
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: '[${{ github.events.inputs.image_repository }}] Airflow Custom Image ${{ github.events.inputs.image_tag }}이 배포됐습니다'
+
