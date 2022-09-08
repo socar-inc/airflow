@@ -67,7 +67,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: "#dp_monitor_cicd"
+          SLACK_CHANNEL: "dp_monitor_cicd"
           SLACK_USERNAME: Airflow Image Builder
           SLACK_ICON_EMOJI: ":airflow:"
           SLACK_TITLE: Message
