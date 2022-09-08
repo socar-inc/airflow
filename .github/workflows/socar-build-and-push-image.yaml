@@ -1,4 +1,4 @@
-name: SOCAR build and push image
+name: SOCAR Airflow ${{ github.event.inputs.image_tag }}
 on:
   workflow_dispatch:
     inputs:
