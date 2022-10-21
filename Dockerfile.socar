@@ -20,5 +20,5 @@ RUN mkdir -p -m 777 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-airflow-provider.git /opt/airflow/custom_providers/socar-data-provider
 
 USER airflow
-RUN pkgs=(${EXTRA_PIP_PACKAGES//,/ });eval "extra_pip_packages=($pkgs)";pip install $extra_pip_packages
+RUN pkgs=(${EXTRA_PIP_PACKAGES//,/ });eval "extra_pip_packages=($pkgs)";echo "${pkgs[*]}" | xargs pip install
 RUN pip install --no-cache-dir -e ./custom_providers/socar-data-provider
