@@ -78,5 +78,5 @@ jobs:
           SLACK_USERNAME: Airflow Image Builder
           SLACK_ICON_EMOJI: ":airflow:"
           SLACK_TITLE: Message
-          SLACK_MESSAGE: '[${{ github.events.inputs.image_repository }}] Airflow Custom Image ${{ github.events.inputs.image_tag }}이 배포됐습니다'
+          SLACK_MESSAGE: '[$image_repository] Airflow Custom Image [$image_tag]이 배포됐습니다'
 
