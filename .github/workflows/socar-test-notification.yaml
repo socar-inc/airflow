@@ -1,8 +1,5 @@
 name: SOCAR Airflow Notification Test
 on:
-  push:
-    branches:
-      - "test/slack-notification"
   workflow_dispatch:
     inputs:
       image_repository:
@@ -14,7 +11,7 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-    name: SOCAR Airflow ${{ github.event.inputs.image_tag }}
+    name: SOCAR Airflow ${{ github.event.inputs.image_tag }}g
     steps:
       - uses: actions/checkout@v3
       - id: 'check-input'
