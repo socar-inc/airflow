@@ -1,5 +1,8 @@
 name: SOCAR Airflow Notification Test
 on:
+  push:
+    branches:
+      - "test/slack-notification"
   workflow_dispatch:
     inputs:
       image_repository:
