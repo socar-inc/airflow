@@ -1,0 +1,30 @@
+name: SOCAR Airflow Notification Test
+on:
+  workflow_dispatch:
+    inputs:
+      image_repository:
+        required: true
+        default: "gcr.io/socar-data/apache-airflow"
+      image_tag:
+        required: true
+        description: 'v<airflow-version>-<custom-tag>'
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    name: SOCAR Airflow ${{ github.event.inputs.image_tag }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: 'check-input'
+        run: |
+          echo "image_repository=${{ inputs.image_repository }}" >> $GITHUB_ENV
+          echo "image_tag=${{ inputs.image_tag }}" >> $GITHUB_ENV
+      - name: Notify to Channel
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: "쏘카_데이터그룹_모니터링_테스트"
+          SLACK_USERNAME: Airflow Image Builder
+          SLACK_ICON_EMOJI: ":airflow:"
+          SLACK_TITLE: Message
+          SLACK_MESSAGE: '[${{ github.event.inputs.image_repository }}] Airflow Custom Image [${{ github.event.inputs.image_tag }}]이 배포됐습니다'
+

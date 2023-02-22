@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       base_image:
-        description: 'base airflow image'     
+        description: 'base airflow image'
         required: true
         default: 'apache/airflow:2.3.2'
       extra_pip_packages:
@@ -78,5 +78,5 @@ jobs:
           SLACK_USERNAME: Airflow Image Builder
           SLACK_ICON_EMOJI: ":airflow:"
           SLACK_TITLE: Message
-          SLACK_MESSAGE: '[$image_repository] Airflow Custom Image [$image_tag]이 배포됐습니다'
+          SLACK_MESSAGE: '[${{ github.event.inputs.image_repository }}] Airflow Custom Image [${{ github.event.inputs.image_tag }}]이 배포됐습니다'
 
