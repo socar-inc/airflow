@@ -3,14 +3,11 @@ on:
   push:
     branches:
       - "test/slack-notification"
-  workflow_dispatch:
-    inputs:
-      image_repository:
-        required: true
-        default: "gcr.io/socar-data/apache-airflow"
-      image_tag:
-        required: true
-        description: 'v<airflow-version>-<custom-tag>'
+
+env:
+  IMAGE_REPOSITORY: "gcr.io/socar-data/apache-airflow"
+  IMAGE_TAG: 'v<airflow-version>-<custom-tag>'
+
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
@@ -29,5 +26,5 @@ jobs:
           SLACK_USERNAME: Airflow Image Builder
           SLACK_ICON_EMOJI: ":airflow:"
           SLACK_TITLE: Message
-          SLACK_MESSAGE: '[${{ github.event.inputs.image_repository }}] Airflow Custom Image [${{ github.event.inputs.image_tag }}]이 배포됐습니다'
+          SLACK_MESSAGE: '[${{ env.IMAGE_REPOSITORY }}] Airflow Custom Image [${{ env.IMAGE_TAG }}]이 배포됐습니다'
 
