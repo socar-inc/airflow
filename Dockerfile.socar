@@ -1,4 +1,4 @@
-ARG AIRFLOW_BASE_IMAGE="apache/airflow:2.3.2"
+ARG AIRFLOW_BASE_IMAGE="gcr.io/socar-data/airflow:2.3.2"
 FROM $AIRFLOW_BASE_IMAGE
 ARG EXTRA_PIP_PACKAGES=""
 # comma-split repo names
