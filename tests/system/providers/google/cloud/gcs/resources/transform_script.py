@@ -14,6 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+<<<<<<<< HEAD:tests/system/providers/google/cloud/gcs/resources/transform_script.py
 from __future__ import annotations
 
 import sys
@@ -26,3 +27,5 @@ with open(source) as src, open(destination, "w+") as dest:
     lines = [line.upper() for line in src.readlines()]
     print(lines)
     dest.writelines(lines)
+========
+>>>>>>>> 6bc4b41286 (refactor: add socar revision):airflow/providers/alibaba/cloud/log/__init__.py~merged
