@@ -20,5 +20,10 @@ RUN mkdir -p -m 777 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-airflow-provider.git /opt/airflow/custom_providers/socar-data-provider
 
 USER airflow
-RUN pkgs=(${EXTRA_PIP_PACKAGES//,/ });eval "extra_pip_packages=($pkgs)";pip install $extra_pip_packages
+RUN if [ -z "$EXTRA_PIP_PACKAGES" ]; then echo "No pip packages specified. Aborting installation."; exit 1; fi
+SPLIT_PACKAGES=$(echo $EXTRA_PIP_PACKAGES | tr "," "\n")
+for package in $SPLIT_PACKAGES; do \
+    pip check $package || { echo "Package $package is invalid. Aborting installation."; exit 1; }; \
+done
+RUN pip install --no-cache-dir $EXTRA_PIP_PACKAGES
 RUN pip install --no-cache-dir -e ./custom_providers/socar-data-provider

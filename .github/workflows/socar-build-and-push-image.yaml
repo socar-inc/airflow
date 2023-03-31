@@ -35,7 +35,7 @@ jobs:
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       - name: Set up target version
-        run: echo "TARGET_VERSION=v${{ github.event.inputs.airflow-version }}-python${{ github.event.inputs.airflow-version }}-${{ envs.NOW }}-${{ github.event.inputs.extra-image-tag }}" >> $GITHUB_ENV
+        run: echo "TARGET_VERSION=v${{ github.event.inputs.airflow-version }}-python${{ github.event.inputs.python-version }}-${{ envs.NOW }}-${{ github.event.inputs.extra-image-tag }}" >> $GITHUB_ENV
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0'
@@ -85,5 +85,5 @@ jobs:
           SLACK_USERNAME: Airflow Image Builder
           SLACK_ICON_EMOJI: ":airflow:"
           SLACK_TITLE: Message
-          SLACK_MESSAGE: '[${{ github.events.inputs.image-repository }}] Airflow Custom Image ${{ envs.TARGET_VERSION }}이 배포됐습니다'
+          SLACK_MESSAGE: '[${{ github.event.inputs.image-repository }}:${{ envs.TARGET_VERSION }}] Airflow Custom Image가 배포됐습니다'
 
