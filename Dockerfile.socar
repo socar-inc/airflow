@@ -21,6 +21,7 @@ RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-a
 
 USER airflow
 RUN pkgs=(${EXTRA_PIP_PACKAGES//,/ })
+RUN echo $pkgs
 RUN eval "extra_pip_packages=($pkgs)"
 RUN pip install $extra_pip_packages
 
