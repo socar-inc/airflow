@@ -5,7 +5,7 @@ on:
       airflow-version:
         description: '에어플로우 버전'
         required: true
-        default: '2.3.2'
+        default: '2.5.3'
       python-version:
         description: '파이썬 버전'
         required: true
