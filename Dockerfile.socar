@@ -20,7 +20,7 @@ RUN mkdir -p -m 777 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN --mount=type=ssh,id=socar-de git clone git@github.com:socar-inc/socar-data-airflow-provider.git /opt/airflow/custom_providers/socar-data-provider
 
 USER airflow
-RUN pip install sentry
+RUN pip install apache-airflow[sentry]
 RUN pip install datadog
 RUN pip install gspread
 
