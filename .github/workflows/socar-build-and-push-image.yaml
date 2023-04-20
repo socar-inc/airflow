@@ -13,7 +13,7 @@ on:
       extra-pip-packages:
         description: '추가 pip 패키지'
         required: false
-        default: 'apache-airflow[sentry],datadog,gspread'
+        default: 'apache-airflow[sentry],datadog,gspread,acryl-datahub-airflow-plugin'
       extra-git-repo:
         description: '추가 git repo python 패키지'
         required: false
